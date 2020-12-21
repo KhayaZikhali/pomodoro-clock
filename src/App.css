@@ -2,9 +2,15 @@ body {
   background-color:aqua;
 }
 
+button {
+  margin: 10px;
+  color: green;;
+}
+
 .App {
   width: 100%;
   height:100%;
+  background-color:aqua;
 }
 
 .breakLength {
@@ -39,7 +45,7 @@ body {
 .controls {
   width:50%;
   height:25vh;
-  background-color:blueviolet;
+  background-color:blue;
   margin:auto;
   margin-top:5rem;
 }
