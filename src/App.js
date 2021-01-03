@@ -1,12 +1,12 @@
 import React from 'react'
 import './App.css';
-import {Clock} from './clock.js'
+import {Clockface} from './clock.js'
 
 
 function App() {
   return (
     <div className="App">
-      <Clock />
+      <Clockface />
     </div>
   );
 }
