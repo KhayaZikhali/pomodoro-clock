@@ -1,6 +1,8 @@
 import React from 'react'
 import './App.css';
-import {Clockface} from './clock.js'
+import {Clockface} from './clock.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {

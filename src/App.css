@@ -1,12 +1,26 @@
-body {
-  background-color:aqua;
-}
 
 .App {
   width: 100%;
-  height:100%;
+  height:100vh;
+  background-color:aqua
 }
-
+/* main title*/
+h1 {
+  font-weight: bolder;
+  text-decoration: underline ;
+  letter-spacing:2px;
+  width:fit-content;
+  margin:auto;
+  color:tomato;
+  text-shadow: black;
+  margin-top: 1vh;
+}
+/*
+==============================
+time adjusters
+==============================
+break length
+*/
 .breakLength {
   background-color: transparent;
   width: 43%;
@@ -18,10 +32,10 @@ body {
   border-radius:2cm;
   margin:3px;
   border:2px solid grey;
-  padding-top:2px;
+  padding-top:5px;
 
 }
-
+/* session length*/
 .sessionLength{
   background-color:transparent;
   width: 43%;
@@ -32,44 +46,47 @@ body {
   border-radius:2cm;
   border: 2px solid grey;
   margin:3px;
-  padding-top:2px;
-
+  padding-top:5px;
 }
 
+.controls {
+  width:50%;
+  height:29vh;
+  background-color:transparent;
+  margin:auto;
+  margin-top:3rem;
+}
+
+/*
+=================================
+CLOCK DIV
+=================================
+*/
 .timer {
-  background-color:yellow;
   width: 50vw;
   height: 40vh;
   margin:auto;
   margin-top:5vh;
   text-align: center;
   border-radius:30px 30px 30px 30px;
-  border: 10px solid white;
-  padding:20px;
+  border: 10px solid grey;
+  padding:10px;
   align-items:center;
 }
 
-
-.controls {
-  display: flexbox;
-  width:50%;
-  height:29vh;
-  background-color:transparent;
-  margin:auto;
-  margin-top:5rem;
+.time {
+  font-size:10vmin;
 }
 
-.this {
-  margin-right: 5px;
+#btnpause {
+  margin:4%;
+  width:calc()
 }
 
-.btns {
-  width: 20%;
-  height: 10%;
-  padding:1px;
+#btnstart {
+  margin:4%;
 }
 
-hr {
-  width:10px;
-  
+#btnreset {
+  margin:4%;
 }
