@@ -1,5 +1,7 @@
+import { Howl } from 'howler';
 import React from 'react';
-import './App.css'
+import './App.css';
+import {Howl, Howler} from 'howler'
 
 class Clockface extends React.Component {
     constructor(props) {
@@ -52,17 +54,41 @@ class Clockface extends React.Component {
              })
           }};
 
-     // reset Counter 
+     // reset counter reloads the whole page 
      resetCounter(){
-        setTimeout(this.start() ,10)
-        this.start(false)
-        document.querySelector(".time").innerHTML = (this.state.sessionLength+":00" )
-       this.setState(state => {
-         return  {breakLength : 5 ,
-                  sessionLength : 25 
-       }
-     });
+      window.location.reload(false);
     };
+
+//logic to handle the  break time 
+break(){
+  startTimer(duration, display){
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + ":" + seconds;
+        if (--timer < 0) {
+            timer = duration;
+        }
+        else if(timer === 0){
+          return;
+        }
+    }, 1000)}
+  }
+
+  // function to start the coutdown when the start button is clicked
+   start(){
+    var breakMinutes = 60 * this.state.breakLength,
+        display = document.querySelector('.time');
+        var myInterval = true;
+        // this is the code that starts the timer
+     if(myInterval === true){
+       this.startTimer(fiveMinutes, display);
+        }
+      }
+
 
 // logic to handle the timer countdown 
  startTimer(duration, display){
@@ -82,17 +108,21 @@ class Clockface extends React.Component {
   }, 1000)}
 
 // function to start the coutdown when the start button is clicked
- start(run){document.querySelector("#btnstart").addEventListener("click",()=>{
+ start(){document.querySelector("#btnstart").addEventListener("click",()=>{
   var fiveMinutes = 60 * this.state.sessionLength,
       display = document.querySelector('.time');
-      var myInterval = run
-      if(myInterval === true){
+      var myInterval = true;
+      // this is the code that starts the timer
+   if(myInterval === true && ){
      this.startTimer(fiveMinutes, display);
-      } else{
+      if(document.querySelector("#btnstart").innerHTML === "Pause" ){
+        document.querySelector("#btnstart").innerHTML = "Start";
+      } else if (document.querySelector("#btnstart").innerHTML = "Start"){
+        document.querySelector("#btnstart").innerHTML = "Pause";
         return;
-      }
-    });
-}
+      }}
+  })
+ }
 
         render() {
            return (
@@ -124,8 +154,7 @@ class Clockface extends React.Component {
                  {this.state.sessionLength}:00
                </div>
                 <div class="play-button-outer">
-                 <button className="Play btn btn-success" id="btnstart" onClick={()=> this.start(false)}>Start</button>          
-                 <button className="Pause btn btn-primary" id="btnpause">Pause</button>          
+                 <button className="Play btn btn-success" id="btnstart" onClick={()=> this.start(true)}>Start</button>                   
                  <button className="Reset btn btn-danger"  id="btnreset" onClick={this.resetCounter}>Reset</button>          
               </div>
               </div>
