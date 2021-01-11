@@ -1,7 +1,6 @@
 import { Howl } from 'howler';
 import React from 'react';
 import './App.css';
-import {Howl, Howler} from 'howler'
 
 class Clockface extends React.Component {
     constructor(props) {
@@ -30,7 +29,8 @@ class Clockface extends React.Component {
             }) 
            }
          };
-     // decrement the break length
+
+// decrement the break length
       decrementBreakLength(){
          if (this.state.breakLength > 0){
            this.setState( state => {
@@ -38,7 +38,8 @@ class Clockface extends React.Component {
             })
          }
         };
-    // increment the session length     
+
+        // increment the session length     
         incrementSessionLength(){
          if(this.state.sessionLength < 60){  
          this.setState (state => {
@@ -46,7 +47,8 @@ class Clockface extends React.Component {
          }) 
         }
       };
-    // decrement the session     
+
+      // decrement the session     
         decrementSessionLength(){
           if (this.state.sessionLength > 0){
             this.setState( state => {
@@ -59,39 +61,13 @@ class Clockface extends React.Component {
       window.location.reload(false);
     };
 
-//logic to handle the  break time 
-break(){
-  startTimer(duration, display){
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        display.textContent = minutes + ":" + seconds;
-        if (--timer < 0) {
-            timer = duration;
-        }
-        else if(timer === 0){
-          return;
-        }
-    }, 1000)}
-  }
-
-  // function to start the coutdown when the start button is clicked
-   start(){
-    var breakMinutes = 60 * this.state.breakLength,
-        display = document.querySelector('.time');
-        var myInterval = true;
-        // this is the code that starts the timer
-     if(myInterval === true){
-       this.startTimer(fiveMinutes, display);
-        }
-      }
-
+    //sound to be played on end
+    sound = new Howl({
+      src: ['mixkit-vintage-telephone-ringtone-1356.mav']
+    });
 
 // logic to handle the timer countdown 
- startTimer(duration, display){
+ startTimer(duration, display , sound){
   var timer = duration, minutes, seconds;
   setInterval(function () {
       minutes = parseInt(timer / 60, 10);
@@ -99,11 +75,20 @@ break(){
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
       display.textContent = minutes + ":" + seconds;
-      if (--timer < 0) {
-          timer = duration;
+
+      if (--timer <= 0 ) {
+          timer = 0;
+          (document.querySelector("#btnstart").innerHTML = "Start");
+            sound.play();
+          // Fires when the sound finishes playing.
+         sound.on('end', function(){
+         console.log('Finished!');
+         });
+
       }
+
       else if(timer === 0){
-        return;
+        return ;
       }
   }, 1000)}
 
@@ -113,7 +98,7 @@ break(){
       display = document.querySelector('.time');
       var myInterval = true;
       // this is the code that starts the timer
-   if(myInterval === true && ){
+   if(myInterval === true && fiveMinutes !== 0){
      this.startTimer(fiveMinutes, display);
       if(document.querySelector("#btnstart").innerHTML === "Pause" ){
         document.querySelector("#btnstart").innerHTML = "Start";
