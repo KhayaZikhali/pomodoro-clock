@@ -2,6 +2,9 @@ import { Howl, Howler } from 'howler';
 import React from 'react';
 import './App.css';
 
+
+//I  fucked this up at the very beginning
+
 class Clockface extends React.Component {
     constructor(props) {
         super(props);
@@ -55,9 +58,17 @@ class Clockface extends React.Component {
       window.location.reload(false);
     };
 
+    functi(){
+      var audio = new Audio('src/mixkit-vintage-telephone-ringtone-1356.mp3');
+      audio.loop = false;
+      audio.play(); 
+      };
+//function that calls the breka length function
+
 // logic to handle the timer countdown 
  startTimer(duration, display , sound){
   var timer = duration, minutes, seconds;
+  var audio = new Audio('src/mixkit-vintage-telephone-ringtone-1356.mp3');
   //audio to be played when timer is done 
   setInterval(function () {
       minutes = parseInt(timer / 60, 10);
@@ -67,34 +78,16 @@ class Clockface extends React.Component {
       display.textContent = minutes + ":" + seconds;
       if (--timer <= 0 ) {
           timer = 0;
-            new Howl({
-            src: ['./src/mixkit-vintage-telephone-ringtone-1356.mp3'],
-            autoplay: true,
-            loop: true,
-            volume: 1.0,
-            onend: function() {
-              console.log('Finished!');
-            }
-          });
+          this.begin()
           // Fires when the sound finishes playing.
-          document.querySelector("#btnstart").innerHTML = "Start"
+          document.querySelector("#btnstart").innerHTML = "Start";
       }
       else if(timer === 0){
-        new Howl({
-          src: ['./src/mixkit-vintage-telephone-ringtone-1356.mp3'],
-          autoplay: true,
-          loop: true,
-          volume: 1.0,
-          onend: function() {
-            console.log('Finished!');
-          }
-        });
+       
         return ;
       }
   }, 1000)}
-
   
-
 // function to start the coutdown when the start button is clicked
  start(){document.querySelector("#btnstart").addEventListener("click",()=>{
   var fiveMinutes = 60 * this.state.sessionLength,
@@ -111,6 +104,43 @@ class Clockface extends React.Component {
       }}
   })
  }
+
+ //funnction to handle the break time 
+ breakTimer(duration, display , sound){
+  var timer = duration, minutes, seconds;
+  var audio = new Audio('src/mixkit-vintage-telephone-ringtone-1356.mp3');
+  //audio to be played when timer is done 
+  setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      display.textContent = minutes + ":" + seconds;
+      if (--timer <= 0 ) {
+          timer = 0;
+          // Fires when the sound finishes playing.
+          document.querySelector("#btnstart").innerHTML = "Start";
+          this.start();
+      }
+      else if(timer === 0){
+        return ;
+      }
+  }, 1000)}
+  
+  begin(){
+    var fiveMinutes = 60 * this.state.breakLength,
+        display = document.querySelector('.time');
+        // this is the code that starts the timer
+     if ( display.innerHTML === 0 ){
+          this.breakTimer(fiveMinutes, display, this.sound);
+        if (document.querySelector("#btnstart").innerHTML === "Pause" ){
+           document.querySelector("#btnstart").innerHTML = "Start";
+        }  else if (document.querySelector("#btnstart").innerHTML = "Start"){
+           document.querySelector("#btnstart").innerHTML = "Pause";
+           return;
+        }}
+    }
+   
 
         render() {
           Howler.volume(0.5);
