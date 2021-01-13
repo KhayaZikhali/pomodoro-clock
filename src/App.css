@@ -72,20 +72,16 @@ CLOCK DIV
   padding:10px;
   align-items:center;
 }
-
 .time {
   font-size:10vmin;
 }
-
 #btnpause {
   margin:4%;
   width:calc()
 }
-
 #btnstart {
   margin:4%;
 }
-
 #btnreset {
   margin:4%;
 }

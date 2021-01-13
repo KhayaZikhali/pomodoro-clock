@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 import React from 'react';
 import './App.css';
 
@@ -11,7 +11,6 @@ class Clockface extends React.Component {
           seconds: 0, 
           minutes: 0
         };
-
     // increment binders 
        this.increment2 = this.incrementSessionLength.bind(this);
        this.increment = this.incrementBreakLength.bind(this);
@@ -20,8 +19,7 @@ class Clockface extends React.Component {
        this.resetCounter = this.resetCounter.bind(this)
        this.start = this.start.bind(this)
       }
-
-     // increment the break length 
+      // increment the break length 
         incrementBreakLength(){
          if(this.state.breakLength < 60){  
             this.setState (state => {
@@ -29,8 +27,7 @@ class Clockface extends React.Component {
             }) 
            }
          };
-
-// decrement the break length
+      // decrement the break length
       decrementBreakLength(){
          if (this.state.breakLength > 0){
            this.setState( state => {
@@ -38,7 +35,6 @@ class Clockface extends React.Component {
             })
          }
         };
-
         // increment the session length     
         incrementSessionLength(){
          if(this.state.sessionLength < 60){  
@@ -47,7 +43,6 @@ class Clockface extends React.Component {
          }) 
         }
       };
-
       // decrement the session     
         decrementSessionLength(){
           if (this.state.sessionLength > 0){
@@ -55,42 +50,50 @@ class Clockface extends React.Component {
               return {sessionLength : state.sessionLength-1}
              })
           }};
-
      // reset counter reloads the whole page 
      resetCounter(){
       window.location.reload(false);
     };
 
-    //sound to be played on end
-    sound = new Howl({
-      src: ['mixkit-vintage-telephone-ringtone-1356.mav']
-    });
-
 // logic to handle the timer countdown 
  startTimer(duration, display , sound){
   var timer = duration, minutes, seconds;
+  //audio to be played when timer is done 
   setInterval(function () {
       minutes = parseInt(timer / 60, 10);
       seconds = parseInt(timer % 60, 10);
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
       display.textContent = minutes + ":" + seconds;
-
       if (--timer <= 0 ) {
           timer = 0;
-          (document.querySelector("#btnstart").innerHTML = "Start");
-            sound.play();
+            new Howl({
+            src: ['./src/mixkit-vintage-telephone-ringtone-1356.mp3'],
+            autoplay: true,
+            loop: true,
+            volume: 1.0,
+            onend: function() {
+              console.log('Finished!');
+            }
+          });
           // Fires when the sound finishes playing.
-         sound.on('end', function(){
-         console.log('Finished!');
-         });
-
+          document.querySelector("#btnstart").innerHTML = "Start"
       }
-
       else if(timer === 0){
+        new Howl({
+          src: ['./src/mixkit-vintage-telephone-ringtone-1356.mp3'],
+          autoplay: true,
+          loop: true,
+          volume: 1.0,
+          onend: function() {
+            console.log('Finished!');
+          }
+        });
         return ;
       }
   }, 1000)}
+
+  
 
 // function to start the coutdown when the start button is clicked
  start(){document.querySelector("#btnstart").addEventListener("click",()=>{
@@ -99,7 +102,7 @@ class Clockface extends React.Component {
       var myInterval = true;
       // this is the code that starts the timer
    if(myInterval === true && fiveMinutes !== 0){
-     this.startTimer(fiveMinutes, display);
+     this.startTimer(fiveMinutes, display, this.sound);
       if(document.querySelector("#btnstart").innerHTML === "Pause" ){
         document.querySelector("#btnstart").innerHTML = "Start";
       } else if (document.querySelector("#btnstart").innerHTML = "Start"){
@@ -110,8 +113,10 @@ class Clockface extends React.Component {
  }
 
         render() {
+          Howler.volume(0.5);
            return (
            <div>      
+           <audio id="audio1" src="./src/mixkit-vintage-telephone-ringtone-1356.mp3" preload="auto"></audio>
              <h1>Pomodoro Clock</h1>          
              <div className="controls">
              <div className="breakLength"> 
